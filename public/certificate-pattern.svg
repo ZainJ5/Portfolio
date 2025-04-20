@@ -1,0 +1,40 @@
+<svg width="600" height="600" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M300 0C134.4 0 0 134.4 0 300C0 465.6 134.4 600 300 600C465.6 600 600 465.6 600 300C600 134.4 465.6 0 300 0ZM300 30C449.1 30 570 150.9 570 300C570 449.1 449.1 570 300 570C150.9 570 30 449.1 30 300C30 150.9 150.9 30 300 30Z" fill="white" fill-opacity="0.2"/>
+  <circle cx="300" cy="300" r="250" stroke="white" stroke-opacity="0.1" stroke-width="2" stroke-dasharray="12 12" />
+  <circle cx="300" cy="300" r="200" stroke="white" stroke-opacity="0.1" stroke-width="2" stroke-dasharray="8 8" />
+  <circle cx="300" cy="300" r="150" stroke="white" stroke-opacity="0.1" stroke-width="2" stroke-dasharray="4 4" />
+  
+  <path d="M300 45C165.2 45 45 165.2 45 300C45 434.8 165.2 555 300 555C434.8 555 555 434.8 555 300C555 165.2 434.8 45 300 45ZM300 75C420.2 75 525 179.8 525 300C525 420.2 420.2 525 300 525C179.8 525 75 420.2 75 300C75 179.8 179.8 75 300 75Z" fill="white" fill-opacity="0.1"/>
+  
+  <g transform="translate(40, 40)">
+    <path d="M20 0H0V20H20V0Z" fill="white" fill-opacity="0.05"/>
+  </g>
+  
+  <g transform="translate(540, 540)">
+    <path d="M20 0H0V20H20V0Z" fill="white" fill-opacity="0.05"/>
+  </g>
+  
+  <g transform="translate(40, 540)">
+    <path d="M20 0H0V20H20V0Z" fill="white" fill-opacity="0.05"/>
+  </g>
+  
+  <g transform="translate(540, 40)">
+    <path d="M20 0H0V20H20V0Z" fill="white" fill-opacity="0.05"/>
+  </g>
+  
+  <g transform="translate(280, 20)">
+    <path d="M40 0H0V10H40V0Z" fill="white" fill-opacity="0.05"/>
+  </g>
+  
+  <g transform="translate(280, 570)">
+    <path d="M40 0H0V10H40V0Z" fill="white" fill-opacity="0.05"/>
+  </g>
+  
+  <g transform="translate(20, 280)">
+    <path d="M10 0H0V40H10V0Z" fill="white" fill-opacity="0.05"/>
+  </g>
+  
+  <g transform="translate(570, 280)">
+    <path d="M10 0H0V40H10V0Z" fill="white" fill-opacity="0.05"/>
+  </g>
+</svg>
