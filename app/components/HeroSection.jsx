@@ -1,24 +1,86 @@
+"use-client"
 import React, { useState, useEffect, Suspense, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Canvas, useLoader, useFrame } from '@react-three/fiber';
-import { Environment, PresentationControls } from '@react-three/drei';
+import { Environment, PresentationControls, Stars, Sparkles } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
+
+function CosmicBackground() {
+  const galaxyRef = useRef();
+  
+  useFrame(({ clock }) => {
+    if (galaxyRef.current) {
+      galaxyRef.current.rotation.y = clock.getElapsedTime() * 0.05;
+      galaxyRef.current.rotation.z = clock.getElapsedTime() * 0.03;
+    }
+  });
+  
+  return (
+    <group ref={galaxyRef}>
+      <Stars 
+        radius={100} 
+        depth={50} 
+        count={5000} 
+        factor={4} 
+        saturation={0} 
+        fade 
+        speed={1} 
+      />
+      <Sparkles 
+        count={100}
+        scale={10}
+        size={2}
+        speed={0.3}
+        color="#8b2bfb"
+      />
+      <Sparkles 
+        count={100}
+        scale={15}
+        size={1}
+        speed={0.2}
+        color="#ffffff"
+      />
+    </group>
+  );
+}
+
+function BackgroundCanvas() {
+  return (
+    <Canvas
+      gl={{ antialias: true, alpha: true }}
+      dpr={[1, 2]}
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        zIndex: 0,
+        background: 'black',
+        pointerEvents: 'none' 
+      }}
+    >
+      <ambientLight intensity={0.4} />
+      <CosmicBackground />
+    </Canvas>
+  );
+}
 
 function Model({ setModelLoaded }) {
   const gltf = useLoader(GLTFLoader, '/models/gaming-pc/scene.gltf');
   const modelRef = useRef();
 
-  const [scale, setScale] = useState(0.22);
+  const [scale, setScale] = useState(0.45);
 
   useEffect(() => {
     function handleResize() {
       const width = window.innerWidth;
-      if (width < 480) setScale(0.20);         
-      else if (width < 640) setScale(0.24);    
-      else if (width < 900) setScale(0.34);    
-      else if (width < 1280) setScale(0.45);  
-      else setScale(0.60);                    
+      if (width < 480) setScale(0.22);
+      else if (width < 640) setScale(0.26);
+      else if (width < 900) setScale(0.34);
+      else if (width < 1280) setScale(0.42);
+      else setScale(0.45);
     }
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -67,17 +129,21 @@ const HeroSection = () => {
 
   return (
     <div id="home" className="relative min-h-screen w-full overflow-hidden bg-black text-white">
+      <BackgroundCanvas />
+      
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div
           className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full opacity-[0.15]"
           style={{
-            background: 'radial-gradient(circle at center, #8b2bfb 0%, rgba(139, 43, 251, 0.2) 30%, transparent 70%)'
+            background:
+              'radial-gradient(circle at center, #8b2bfb 0%, rgba(139, 43, 251, 0.2) 30%, transparent 70%)'
           }}
         ></div>
         <div
           className="absolute -left-20 top-1/4 w-[300px] h-[300px] rounded-full opacity-[0.12]"
           style={{
-            background: 'radial-gradient(circle at center, #8b2bfb 0%, rgba(139, 43, 251, 0.2) 35%, transparent 70%)'
+            background:
+              'radial-gradient(circle at center, #8b2bfb 0%, rgba(139, 43, 251, 0.2) 35%, transparent 70%)'
           }}
         ></div>
         {Array.from({ length: 80 }).map((_, i) => (
@@ -91,7 +157,8 @@ const HeroSection = () => {
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
               opacity: Math.random() * 0.7 + 0.1,
-              boxShadow: i % 5 === 0 ? '0 0 4px 1px rgba(139, 43, 251, 0.6)' : '0 0 2px rgba(255, 255, 255, 0.6)'
+              boxShadow:
+                i % 5 === 0 ? '0 0 4px 1px rgba(139, 43, 251, 0.6)' : '0 0 2px rgba(255, 255, 255, 0.6)'
             }}
           ></div>
         ))}
@@ -108,12 +175,12 @@ const HeroSection = () => {
             }}
             animate={{
               opacity: [0.4, 0.8, 0.4],
-              scale: [1, 1.3, 1],
+              scale: [1, 1.3, 1]
             }}
             transition={{
               duration: Math.random() * 3 + 3,
               repeat: Infinity,
-              ease: "easeInOut"
+              ease: 'easeInOut'
             }}
           ></motion.div>
         ))}
@@ -151,10 +218,10 @@ const HeroSection = () => {
 
       <div className="h-16 sm:h-20"></div>
 
-      <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 md:py-10 lg:py-12 min-h-[calc(100vh-4rem)] sm:min-h-[calc(100vh-5rem)] flex items-center">
+      <div className="container mx-auto pl-4 pr-0 sm:pl-6 py-4 sm:py-8 md:py-10 lg:py-12 min-h-[calc(100vh-4rem)] sm:min-h-[calc(100vh-5rem)] flex items-center">
         <div className="flex flex-col lg:flex-row w-full items-center gap-6 sm:gap-8 lg:gap-12">
           <motion.div
-            className="w-full lg:w-2/5 z-10 text-center lg:text-left pt-4 sm:pt-8 lg:pt-0"
+            className="w-full lg:w-3/5 z-10 text-center lg:text-left pt-4 sm:pt-8 lg:pt-0"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
@@ -244,9 +311,10 @@ const HeroSection = () => {
                   camera={{ position: [0, 0, 7.2], fov: 50 }}
                   style={{
                     background: 'transparent',
-                    width: '100%',
-                    height: '100%',
+                    width: '80%',
+                    height: '80%',
                     pointerEvents: 'auto',
+                    margin: 'auto'
                   }}
                 >
                   <PresentationControls
@@ -266,19 +334,23 @@ const HeroSection = () => {
                   <pointLight position={[-10, -10, -10]} intensity={0.5} />
                 </Canvas>
               </div>
-              <div className="absolute left-1/2 bottom-6 -translate-x-1/2 pointer-events-none z-20"
-                   style={{
-                     width: '60%',
-                     height: '36px',
-                     filter: 'blur(8px)',
-                     opacity: 0.25,
-                   }}>
-                <div style={{
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: '50%',
-                  background: 'radial-gradient(ellipse at center, #8b2bfb33 40%, transparent 80%)'
-                }}/>
+              <div
+                className="absolute left-1/2 bottom-6 -translate-x-1/2 pointer-events-none z-20"
+                style={{
+                  width: '50%',
+                  height: '36px',
+                  filter: 'blur(8px)',
+                  opacity: 0.25
+                }}
+              >
+                <div
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: '50%',
+                    background: 'radial-gradient(ellipse at center, #8b2bfb33 40%, transparent 80%)'
+                  }}
+                />
               </div>
             </div>
           </motion.div>
