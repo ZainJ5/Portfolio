@@ -1,4 +1,4 @@
-"use-client"
+"use client"
 import React, { useState, useEffect, Suspense, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Canvas, useLoader, useFrame } from '@react-three/fiber';
@@ -76,10 +76,10 @@ function Model({ setModelLoaded }) {
   useEffect(() => {
     function handleResize() {
       const width = window.innerWidth;
-      if (width < 480) setScale(0.22);
-      else if (width < 640) setScale(0.26);
-      else if (width < 900) setScale(0.34);
-      else if (width < 1280) setScale(0.42);
+      if (width < 480) setScale(0.40);
+      else if (width < 640) setScale(0.50);
+      else if (width < 900) setScale(0.50);
+      else if (width < 1280) setScale(0.60);
       else setScale(0.45);
     }
     handleResize();
@@ -116,9 +116,35 @@ function Model({ setModelLoaded }) {
 
 const HeroSection = () => {
   const [modelLoaded, setModelLoaded] = useState(false);
-  const [isPortrait, setIsPortrait] = useState(true);
+  const [isPortrait, setIsPortrait] = useState(false);
+  const [stars, setStars] = useState([]);
+  const [glows, setGlows] = useState([]);
 
   useEffect(() => {
+    // Generate static positions for stars
+    const starsArr = Array.from({ length: 80 }).map((_, i) => ({
+      width: `${Math.random() * 2 + 0.5}px`,
+      height: `${Math.random() * 2 + 0.5}px`,
+      backgroundColor: i % 5 === 0 ? '#8b2bfb' : '#ffffff',
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
+      opacity: Math.random() * 0.7 + 0.1,
+      boxShadow: i % 5 === 0 ? '0 0 4px 1px rgba(139, 43, 251, 0.6)' : '0 0 2px rgba(255, 255, 255, 0.6)'
+    }));
+    
+    // Generate static positions for glows
+    const glowsArr = Array.from({ length: 12 }).map(() => ({
+      width: `${Math.random() * 3 + 2}px`,
+      height: `${Math.random() * 3 + 2}px`,
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
+      boxShadow: '0 0 6px 2px rgba(139, 43, 251, 0.5)',
+      duration: Math.random() * 3 + 3
+    }));
+    
+    setStars(starsArr);
+    setGlows(glowsArr);
+    
     const checkOrientation = () => {
       setIsPortrait(window.innerHeight > window.innerWidth);
     };
@@ -146,39 +172,24 @@ const HeroSection = () => {
               'radial-gradient(circle at center, #8b2bfb 0%, rgba(139, 43, 251, 0.2) 35%, transparent 70%)'
           }}
         ></div>
-        {Array.from({ length: 80 }).map((_, i) => (
+        {stars.map((style, i) => (
           <div
             key={`star-${i}`}
             className="absolute rounded-full"
-            style={{
-              width: `${Math.random() * 2 + 0.5}px`,
-              height: `${Math.random() * 2 + 0.5}px`,
-              backgroundColor: i % 5 === 0 ? '#8b2bfb' : '#ffffff',
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              opacity: Math.random() * 0.7 + 0.1,
-              boxShadow:
-                i % 5 === 0 ? '0 0 4px 1px rgba(139, 43, 251, 0.6)' : '0 0 2px rgba(255, 255, 255, 0.6)'
-            }}
+            style={style}
           ></div>
         ))}
-        {Array.from({ length: 12 }).map((_, i) => (
+        {glows.map((style, i) => (
           <motion.div
             key={`glow-${i}`}
             className="absolute rounded-full bg-[#8b2bfb]"
-            style={{
-              width: `${Math.random() * 3 + 2}px`,
-              height: `${Math.random() * 3 + 2}px`,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              boxShadow: '0 0 6px 2px rgba(139, 43, 251, 0.5)'
-            }}
+            style={style}
             animate={{
               opacity: [0.4, 0.8, 0.4],
               scale: [1, 1.3, 1]
             }}
             transition={{
-              duration: Math.random() * 3 + 3,
+              duration: style.duration,
               repeat: Infinity,
               ease: 'easeInOut'
             }}
@@ -337,7 +348,7 @@ const HeroSection = () => {
               <div
                 className="absolute left-1/2 bottom-6 -translate-x-1/2 pointer-events-none z-20"
                 style={{
-                  width: '50%',
+                  width: '60%',
                   height: '36px',
                   filter: 'blur(8px)',
                   opacity: 0.25
