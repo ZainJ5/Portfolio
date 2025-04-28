@@ -11,7 +11,7 @@ const achievements = [
     organization: "Microsoft",
     date: "Mar 2023",
     description:
-      "Secured 3rd Place in Microsoft's AI Micathon, developing an innovative solution for specially abled.",
+      "Secured 3rd Place in Microsoft's Micathon, developing an innovative solution for specially abled.",
     skills: ["Python/Qt", "Problem Solving", "Team Collaboration", "Presentation"],
     liveLink: "https://1drv.ms/v/s!AsLeCa7Olk9Hg65gVIya-iUHlqFj3w?e=gTlkE4",
   },

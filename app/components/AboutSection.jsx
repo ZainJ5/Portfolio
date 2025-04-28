@@ -46,22 +46,6 @@ const AboutSection = () => {
               <div className="absolute inset-0 rounded-2xl border-2 border-indigo-500/30 z-20" />
               <div className="absolute inset-0 bg-gradient-to-br from-blue-600/30 to-purple-600/30 mix-blend-overlay z-10" />
               
-              <div className="absolute bottom-4 right-4 z-20">
-                <motion.div 
-                  className="text-4xl font-bold bg-black/30 text-white/70 px-3 py-1 rounded-lg backdrop-blur-sm border border-white/10"
-                  animate={{ 
-                    opacity: [0.6, 1, 0.6]
-                  }}
-                  transition={{ 
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                >
-                  ZJ
-                </motion.div>
-              </div>
-              
               <Image 
                 src="/profile-photo.jpg" 
                 alt="Zain Jamshaid" 
@@ -155,24 +139,10 @@ const AboutSection = () => {
               </p>
             </motion.div>
             
-            {/* <motion.div 
-              variants={itemVariants}
-              className="flex flex-wrap gap-3 mb-8"
-            >
-              {['HTML/CSS', 'JavaScript', 'React', 'Next.js', 'Three.js', 'Node.js'].map((skill) => (
-                <motion.span 
-                  key={skill}
-                  whileHover={{ scale: 1.05, y: -3 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="px-4 py-2 bg-white/5 border border-indigo-500/40 rounded-lg text-gray-300 shadow-md"
-                >
-                  {skill}
-                </motion.span>
-              ))}
-            </motion.div> */}
-            
             <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
-              <motion.button 
+              <motion.a 
+                href="/resume/Zain Jamshaid Resume.docx"
+                download
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.95 }}
                 className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg shadow-lg transition-all"
@@ -181,7 +151,7 @@ const AboutSection = () => {
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
-              </motion.button>
+              </motion.a>
               
               <motion.button 
                 whileHover={{ scale: 1.03 }}

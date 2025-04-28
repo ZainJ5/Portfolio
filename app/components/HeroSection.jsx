@@ -121,7 +121,6 @@ const HeroSection = () => {
   const [glows, setGlows] = useState([]);
 
   useEffect(() => {
-    // Generate static positions for stars
     const starsArr = Array.from({ length: 80 }).map((_, i) => ({
       width: `${Math.random() * 2 + 0.5}px`,
       height: `${Math.random() * 2 + 0.5}px`,
@@ -132,7 +131,6 @@ const HeroSection = () => {
       boxShadow: i % 5 === 0 ? '0 0 4px 1px rgba(139, 43, 251, 0.6)' : '0 0 2px rgba(255, 255, 255, 0.6)'
     }));
     
-    // Generate static positions for glows
     const glowsArr = Array.from({ length: 12 }).map(() => ({
       width: `${Math.random() * 3 + 2}px`,
       height: `${Math.random() * 3 + 2}px`,

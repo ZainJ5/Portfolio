@@ -16,26 +16,27 @@ const ExperiencesSection = () => {
       id: 1,
       title: "Tech Team Member",
       organization: "GDGOC GIKI",
-      date: "2024 - Present", 
-      description: "Active member contributing to technical workshops, projects, and community events.",
-      skills: ["Community Building", "Technical Support", "Event Coordination"]
+      date: "2024 - Present",
+      description: "Contributed to technical projects like an automation system and the GIKI Chatbot. Organized a Speed Programming Competition.",
+      skills: ["Automation", "Chatbot Development", "Event Organization"]
     },
     {
       id: 2,
-      title: "Team Member",
+      title: "Subhead, Alpak Hackathon",
       organization: "ACM GIKI",
-      date: "2024 - Present", 
-      description: "Active member contributing to technical workshops, projects, and community events.",
-      skills: ["Community Building", "Technical Support", "Event Coordination"]
+      date: "2024 - Present",
+      description: "Led the Alpak Hackathon team and supported technical events and workshops for the computing society.",
+      skills: ["Hackathon Management", "Event Coordination", "Technical Support"]
     },
     {
       id: 3,
       title: "Team Member",
       organization: "Team Techno",
-      date: "2024 - Present", 
-      description: "Active member contributing to technical workshops, projects, and community events.",
-      skills: ["Community Building", "Technical Support", "Event Coordination"]
+      date: "2024 - Present",
+      description: "Built an Obstacle Avoidance Robot as part of robotics projects and contributed to technical workshops.",
+      skills: ["Robotics", "Embedded Systems", "Problem Solving"]
     }
+    
   ].sort((a, b) => {
       const parseDate = (dateStr) => {
         if (dateStr.includes("Present")) return new Date(3000, 0);
@@ -247,7 +248,6 @@ const ExperiencesSection = () => {
 
   return (
     <div id="experiences" className="relative py-20 md:py-28 pt-0 overflow-hidden">
-    {/* Fixed background gradient - no animations applied */}
     <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-black to-gray-900"></div>
     <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:32px_32px]"></div>
     
