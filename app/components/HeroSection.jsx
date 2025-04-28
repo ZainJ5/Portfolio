@@ -2,7 +2,7 @@
 import React, { useState, useEffect, Suspense, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Canvas, useLoader, useFrame } from '@react-three/fiber';
-import { Environment, PresentationControls, Stars, Sparkles } from '@react-three/drei';
+import { Environment, PresentationControls, Stars } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
 
@@ -27,19 +27,14 @@ function CosmicBackground() {
         fade 
         speed={1} 
       />
-      <Sparkles 
-        count={100}
-        scale={10}
-        size={2}
-        speed={0.3}
-        color="#8b2bfb"
-      />
-      <Sparkles 
-        count={100}
-        scale={15}
-        size={1}
-        speed={0.2}
-        color="#ffffff"
+      <Stars 
+        radius={150} 
+        depth={50} 
+        count={100} 
+        factor={4} 
+        saturation={0} 
+        fade 
+        speed={0.2} 
       />
     </group>
   );
@@ -118,30 +113,20 @@ const HeroSection = () => {
   const [modelLoaded, setModelLoaded] = useState(false);
   const [isPortrait, setIsPortrait] = useState(false);
   const [stars, setStars] = useState([]);
-  const [glows, setGlows] = useState([]);
 
   useEffect(() => {
-    const starsArr = Array.from({ length: 80 }).map((_, i) => ({
+    const starsArr = Array.from({ length: 80 }).map(() => ({
       width: `${Math.random() * 2 + 0.5}px`,
       height: `${Math.random() * 2 + 0.5}px`,
-      backgroundColor: i % 5 === 0 ? '#8b2bfb' : '#ffffff',
+      backgroundColor: '#ffffff',
       top: `${Math.random() * 100}%`,
       left: `${Math.random() * 100}%`,
       opacity: Math.random() * 0.7 + 0.1,
-      boxShadow: i % 5 === 0 ? '0 0 4px 1px rgba(139, 43, 251, 0.6)' : '0 0 2px rgba(255, 255, 255, 0.6)'
+      boxShadow: '0 0 2px rgba(255, 255, 255, 0.6)'
     }));
     
-    const glowsArr = Array.from({ length: 12 }).map(() => ({
-      width: `${Math.random() * 3 + 2}px`,
-      height: `${Math.random() * 3 + 2}px`,
-      top: `${Math.random() * 100}%`,
-      left: `${Math.random() * 100}%`,
-      boxShadow: '0 0 6px 2px rgba(139, 43, 251, 0.5)',
-      duration: Math.random() * 3 + 3
-    }));
     
     setStars(starsArr);
-    setGlows(glowsArr);
     
     const checkOrientation = () => {
       setIsPortrait(window.innerHeight > window.innerWidth);
@@ -156,20 +141,7 @@ const HeroSection = () => {
       <BackgroundCanvas />
       
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div
-          className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full opacity-[0.15]"
-          style={{
-            background:
-              'radial-gradient(circle at center, #8b2bfb 0%, rgba(139, 43, 251, 0.2) 30%, transparent 70%)'
-          }}
-        ></div>
-        <div
-          className="absolute -left-20 top-1/4 w-[300px] h-[300px] rounded-full opacity-[0.12]"
-          style={{
-            background:
-              'radial-gradient(circle at center, #8b2bfb 0%, rgba(139, 43, 251, 0.2) 35%, transparent 70%)'
-          }}
-        ></div>
+        
         {stars.map((style, i) => (
           <div
             key={`star-${i}`}
@@ -177,46 +149,8 @@ const HeroSection = () => {
             style={style}
           ></div>
         ))}
-        {glows.map((style, i) => (
-          <motion.div
-            key={`glow-${i}`}
-            className="absolute rounded-full bg-[#8b2bfb]"
-            style={style}
-            animate={{
-              opacity: [0.4, 0.8, 0.4],
-              scale: [1, 1.3, 1]
-            }}
-            transition={{
-              duration: style.duration,
-              repeat: Infinity,
-              ease: 'easeInOut'
-            }}
-          ></motion.div>
-        ))}
-        <div
-          className="absolute inset-0 opacity-[0.07]"
-          style={{
-            backgroundImage: `
-              radial-gradient(circle at 20% 80%, rgba(139, 43, 251, 0.8) 0%, transparent 20%),
-              radial-gradient(circle at 80% 40%, rgba(139, 43, 251, 0.8) 0%, transparent 25%)
-            `,
-            filter: 'blur(40px)'
-          }}
-        ></div>
-        <svg className="absolute inset-0 w-full h-full opacity-[0.08]" xmlns="http://www.w3.org/2000/svg">
-          <line x1="10%" y1="30%" x2="15%" y2="60%" stroke="#8b2bfb" strokeWidth="0.3" />
-          <line x1="15%" y1="60%" x2="40%" y2="80%" stroke="#8b2bfb" strokeWidth="0.3" />
-          <line x1="40%" y1="80%" x2="60%" y2="40%" stroke="#8b2bfb" strokeWidth="0.3" />
-          <line x1="80%" y1="10%" x2="90%" y2="30%" stroke="#8b2bfb" strokeWidth="0.3" />
-          <line x1="90%" y1="30%" x2="75%" y2="50%" stroke="#8b2bfb" strokeWidth="0.3" />
-          <circle cx="10%" cy="30%" r="1" fill="#8b2bfb" />
-          <circle cx="15%" cy="60%" r="0.8" fill="#8b2bfb" />
-          <circle cx="40%" cy="80%" r="1.2" fill="#8b2bfb" />
-          <circle cx="60%" cy="40%" r="1" fill="#8b2bfb" />
-          <circle cx="80%" cy="10%" r="0.8" fill="#8b2bfb" />
-          <circle cx="90%" cy="30%" r="1" fill="#8b2bfb" />
-          <circle cx="75%" cy="50%" r="0.8" fill="#8b2bfb" />
-        </svg>
+
+        
         <div
           className="absolute bottom-0 left-0 w-full h-[150px] pointer-events-none"
           style={{
@@ -273,7 +207,7 @@ const HeroSection = () => {
               className="flex flex-wrap gap-3 sm:gap-4 justify-center lg:justify-start"
             >
               <motion.button
-                whileHover={{ scale: 1.05, boxShadow: '0 0 15px rgba(139, 43, 251, 0.5)' }}
+                whileHover={{ scale: 1.05, boxShadow: '0 0 15px rgba(0, 100, 255, 0.5)' }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => window.location.href = "#projects"}
                 className="px-5 py-2.5 sm:px-6 sm:py-3 md:px-8 md:py-3.5 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium rounded-lg transition-all duration-300 text-sm sm:text-base"
@@ -342,24 +276,6 @@ const HeroSection = () => {
                   <spotLight position={[10, 10, 10]} angle={0.2} penumbra={1} intensity={1.2} castShadow />
                   <pointLight position={[-10, -10, -10]} intensity={0.5} />
                 </Canvas>
-              </div>
-              <div
-                className="absolute left-1/2 bottom-6 -translate-x-1/2 pointer-events-none z-20"
-                style={{
-                  width: '60%',
-                  height: '36px',
-                  filter: 'blur(8px)',
-                  opacity: 0.25
-                }}
-              >
-                <div
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    borderRadius: '50%',
-                    background: 'radial-gradient(ellipse at center, #8b2bfb33 40%, transparent 80%)'
-                  }}
-                />
               </div>
             </div>
           </motion.div>

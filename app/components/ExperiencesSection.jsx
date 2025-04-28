@@ -22,10 +22,10 @@ const ExperiencesSection = () => {
     },
     {
       id: 2,
-      title: "Subhead, Alpak Hackathon",
+      title: "Subhead, All Pak Hackathon",
       organization: "ACM GIKI",
       date: "2024 - Present",
-      description: "Led the Alpak Hackathon team and supported technical events and workshops for the computing society.",
+      description: "Led the All Pak Hackathon team and supported technical events and workshops for the computing society.",
       skills: ["Hackathon Management", "Event Coordination", "Technical Support"]
     },
     {
