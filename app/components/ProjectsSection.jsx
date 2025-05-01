@@ -43,14 +43,14 @@ const ProjectsSection = () => {
     },
     {
       id: 4,
-      title: "Restaurant Website with Admin Portal",
+      title: "Tipu Restaurant Website with Admin Portal",
       description:
-        "A comprehensive restaurant website featuring an integrated admin portal for managing orders, menu updates, and reservations. Built using Next.js, Firebase, and MongoDB.",
+        "A live and fully functional restaurant website developed for Tipu Restaurant, enabling them to manage online orders, menu updates through an integrated admin portal. The system is actively used by the restaurant staff.",
       image: "/project/resturant.jpg",
-      tags: ["Next.js", "Firebase", "MongoDB"],
-      link: "https://restaurant-website-h3zupaafp-zain-jamshaids-projects.vercel.app/",
+      tags: ["Next.js", "Firebase", "MongoDB", "VPS Hosting"],
+      link: "https://tipuburgerandbroast.com/",
       github: "https://github.com/ZainJ5/Restaurant-website",
-    },
+    },    
     {
       id: 5,
       title: "Social Connect",
@@ -192,26 +192,26 @@ const ProjectsSection = () => {
         </div>
         
         <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          viewport={{ once: false }}
-          className="text-center mt-16"
-        >
-          <motion.a
-            href="https://github.com/ZainJ5" 
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:shadow-lg transition-all shadow-blue-500/20 shadow-md"
-          >
-            View More Projects
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </motion.a>
-        </motion.div>
+  initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}
+  transition={{ duration: 0.8, delay: 0.4 }}
+  viewport={{ once: false }}
+  className="text-center mt-16"
+>
+  <motion.a
+    href="https://github.com/ZainJ5" 
+    target="_blank"
+    rel="noopener noreferrer"
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    className="inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:shadow-lg transition-all shadow-blue-500/20 shadow-md"
+  >
+    View More Projects on GitHub
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+    </svg>
+  </motion.a>
+</motion.div>
         
         <AnimatePresence>
           {selectedVideo && (
@@ -251,9 +251,6 @@ const ProjectsSection = () => {
           )}
         </AnimatePresence>
       </div>
-      {/* Gradient transition at the end */}
-{/* <div className="h-24 md:h-32 w-full bg-gradient-to-b from-black to-gray-900" /> */}
-
     </div>
   );
 };
