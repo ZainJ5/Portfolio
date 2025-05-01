@@ -6,7 +6,6 @@ import { Environment, PresentationControls, Stars, useGLTF } from '@react-three/
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
 
-// Preload model to prevent loading issues
 useGLTF.preload('/models/gaming-pc/scene.gltf');
 
 function CosmicBackground() {
@@ -24,7 +23,7 @@ function CosmicBackground() {
       <Stars 
         radius={100} 
         depth={50} 
-        count={2500} // Reduced count for better performance
+        count={5000} 
         factor={4} 
         saturation={0} 
         fade 
@@ -33,7 +32,7 @@ function CosmicBackground() {
       <Stars 
         radius={150} 
         depth={50} 
-        count={50} // Reduced count for better performance
+        count={100} 
         factor={4} 
         saturation={0} 
         fade 
@@ -47,12 +46,12 @@ function BackgroundCanvas() {
   return (
     <Canvas
       gl={{ 
-        antialias: false, // Changed to false for performance
+        antialias: true, 
         alpha: true,
         powerPreference: 'high-performance',
-        precision: 'mediump', // Lower precision for better performance
+        precision: 'highp', 
       }}
-      dpr={[0.6, 1.5]} // Lowered DPR range for better performance
+      dpr={[1, 2]} 
       style={{
         position: 'absolute',
         top: 0,
@@ -63,7 +62,7 @@ function BackgroundCanvas() {
         background: 'black',
         pointerEvents: 'none' 
       }}
-      performance={{ min: 0.5 }} // Allow performance scaling
+      performance={{ min: 0.5 }} 
     >
       <ambientLight intensity={0.4} />
       <CosmicBackground />
@@ -72,25 +71,21 @@ function BackgroundCanvas() {
 }
 
 function Model({ setModelLoaded, lowPerformanceMode }) {
-  // Use useGLTF instead of useLoader for better caching and performance
-  const { scene } = useGLTF('/models/gaming-pc/scene.gltf');
+  const { scene } = useGLTF('/models/gaming-pc/scene.gltf', true);
   const modelRef = useRef();
 
   const [scale, setScale] = useState(0.45);
 
   useEffect(() => {
-    // Optimize scene for rendering
     scene.traverse((object) => {
       if (object.isMesh) {
-        // Disable shadows for better performance
-        object.castShadow = false;
-        object.receiveShadow = false;
+        object.castShadow = !lowPerformanceMode;
+        object.receiveShadow = !lowPerformanceMode;
         
-        // Simplify materials for low performance mode
         if (lowPerformanceMode && object.material) {
-          object.material.metalness = 0.5;
-          object.material.roughness = 0.5;
-          object.material.envMapIntensity = 0.5;
+          if (object.material.map) {
+            object.material.map.anisotropy = 4;
+          }
         }
       }
     });
@@ -107,19 +102,17 @@ function Model({ setModelLoaded, lowPerformanceMode }) {
     handleResize();
     window.addEventListener('resize', handleResize);
     
-    // Notify when model is ready
     setTimeout(() => setModelLoaded(true), 300);
     
     return () => window.removeEventListener('resize', handleResize);
   }, [scene, setModelLoaded, lowPerformanceMode]);
 
-  // Optimize animation frame rate for performance
   useFrame((state) => {
     if (modelRef.current) {
       modelRef.current.rotation.y = THREE.MathUtils.lerp(
         modelRef.current.rotation.y,
-        Math.sin(state.clock.getElapsedTime() * 0.2) * 0.15,
-        0.01 // Reduced animation speed for better performance
+        Math.sin(state.clock.getElapsedTime() * 0.3) * 0.2,
+        0.02 
       );
     }
   });
@@ -143,22 +136,16 @@ const HeroSection = () => {
   const [lowPerformanceMode, setLowPerformanceMode] = useState(false);
   const [loadingFailed, setLoadingFailed] = useState(false);
   
-  // Detect device capabilities
   useEffect(() => {
-    // Check if this is likely a low-end device
     const isLowEndDevice = () => {
       const userAgent = navigator.userAgent;
-      // Check for mobile devices
-      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+      const isMobile = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
       
-      // Check for CPU cores (fewer cores often means less powerful device)
       const cpuCores = navigator.hardwareConcurrency || 0;
       
-      // Set low performance mode for mobile or devices with fewer than 4 cores
-      return isMobile || cpuCores < 4;
+      return (isMobile && cpuCores <= 2) || cpuCores <= 1;
     };
     
-    // Simplified WebGL detection
     const hasWebGL = () => {
       try {
         const canvas = document.createElement('canvas');
@@ -169,23 +156,20 @@ const HeroSection = () => {
       }
     };
     
-    // Set state based on device capabilities
     setLowPerformanceMode(isLowEndDevice());
     setCanRender3D(hasWebGL());
     
-    // Set loading failed after timeout
     const failTimeout = setTimeout(() => {
       if (!modelLoaded) {
         setLoadingFailed(true);
       }
-    }, 15000); // 15 second timeout for loading
+    }, 20000);
     
     return () => clearTimeout(failTimeout);
   }, [modelLoaded]);
 
-  // Generate fewer stars for better performance
   useEffect(() => {
-    const starCount = lowPerformanceMode ? 40 : 80;
+    const starCount = lowPerformanceMode ? 60 : 80; 
     const starsArr = Array.from({ length: starCount }).map(() => ({
       width: `${Math.random() * 2 + 0.5}px`,
       height: `${Math.random() * 2 + 0.5}px`,
@@ -206,7 +190,6 @@ const HeroSection = () => {
     return () => window.removeEventListener('resize', checkOrientation);
   }, [lowPerformanceMode]);
 
-  // Create a fallback image for devices that can't render 3D or when loading fails
   const renderFallback = useCallback(() => {
     return (
       <div className="w-full h-full flex items-center justify-center">
@@ -353,14 +336,14 @@ const HeroSection = () => {
                   renderFallback()
                 ) : (
                   <Canvas
-                    shadows={false} // Disabled shadows for performance
-                    dpr={lowPerformanceMode ? [0.5, 1] : [0.7, 1.5]} // Lower resolution for better performance
+                    shadows={!lowPerformanceMode} 
+                    dpr={lowPerformanceMode ? [0.75, 1.5] : [1, 2]} 
                     camera={{ position: [0, 0, 7.2], fov: 50 }}
                     gl={{
-                      antialias: false, // Disabled for performance
+                      antialias: !lowPerformanceMode, 
                       alpha: true,
                       powerPreference: 'high-performance',
-                      precision: lowPerformanceMode ? 'lowp' : 'mediump',
+                      precision: lowPerformanceMode ? 'mediump' : 'highp', 
                     }}
                     style={{
                       background: 'transparent',
@@ -369,7 +352,7 @@ const HeroSection = () => {
                       pointerEvents: 'auto',
                       margin: 'auto'
                     }}
-                    performance={{ min: 0.1, max: 1 }}
+                    performance={{ min: 0.3, max: 1 }} 
                     onError={() => setLoadingFailed(true)}
                   >
                     <PresentationControls
@@ -378,7 +361,7 @@ const HeroSection = () => {
                       rotation={[0, 0, 0]}
                       polar={[-Math.PI / 4, Math.PI / 4]}
                       azimuth={[-Math.PI / 4, Math.PI / 4]}
-                      config={{ mass: 2, tension: 200, friction: 26 }} // Optimized physics
+                      config={{ mass: 2, tension: 200, friction: 26 }}
                     >
                       <Suspense fallback={null}>
                         <Model 
@@ -388,17 +371,19 @@ const HeroSection = () => {
                         <Environment 
                           preset="city" 
                           background={false}
-                          resolution={lowPerformanceMode ? 128 : 256} // Lower resolution for performance
+                          resolution={lowPerformanceMode ? 256 : 512} 
                         />
                       </Suspense>
                     </PresentationControls>
                     <ambientLight intensity={0.6} />
-                    {!lowPerformanceMode && (
-                      <>
-                        <spotLight position={[10, 10, 10]} angle={0.2} penumbra={1} intensity={1.2} castShadow={false} />
-                        <pointLight position={[-10, -10, -10]} intensity={0.5} />
-                      </>
-                    )}
+                    <spotLight 
+                      position={[10, 10, 10]} 
+                      angle={0.2} 
+                      penumbra={1} 
+                      intensity={1.2} 
+                      castShadow={!lowPerformanceMode} 
+                    />
+                    <pointLight position={[-10, -10, -10]} intensity={0.5} />
                   </Canvas>
                 )}
               </div>
