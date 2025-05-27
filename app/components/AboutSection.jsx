@@ -141,7 +141,7 @@ const AboutSection = () => {
             
             <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
               <motion.a 
-                href="/resume/Zain Jamshaid Resume.docx"
+                href="/resume/zainjamshaid_resume.pdf"
                 download
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.95 }}
