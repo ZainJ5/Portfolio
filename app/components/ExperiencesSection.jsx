@@ -6,7 +6,7 @@ import { motion, useInView } from 'framer-motion';
 const ExperiencesSection = () => {
   const [lineVisible, setLineVisible] = useState(false);
   const sectionRef = useRef(null);
-  
+
   useEffect(() => {
     setLineVisible(true);
   }, []);
@@ -14,6 +14,14 @@ const ExperiencesSection = () => {
   const experienceItems = [
     {
       id: 1,
+      title: "Full Stack Development Intern",
+      organization: "Netsol Technologies",
+      date: "2025 – Present",
+      description: "Working on production-level full stack applications, collaborating with cross-functional teams, and contributing to real-world client projects across the MERN stack.",
+      skills: ["Full Stack Development", "Node.js", "React", "MongoDB", "Express.js", "REST APIs", "Version Control (Git)"]
+    },
+    {
+      id: 2,
       title: "Tech Team Member",
       organization: "GDGOC GIKI",
       date: "2024 - Present",
@@ -21,7 +29,7 @@ const ExperiencesSection = () => {
       skills: ["Automation", "Chatbot Development", "Event Organization"]
     },
     {
-      id: 2,
+      id: 3,
       title: "Subhead, All Pak Hackathon",
       organization: "ACM GIKI",
       date: "2024 - Present",
@@ -29,35 +37,35 @@ const ExperiencesSection = () => {
       skills: ["Hackathon Management", "Event Coordination", "Technical Support"]
     },
     {
-      id: 3,
+      id: 4,
       title: "Team Member",
       organization: "Team Techno",
       date: "2024 - Present",
       description: "Built an Obstacle Avoidance Robot as part of robotics projects and contributed to technical workshops.",
       skills: ["Robotics", "Embedded Systems", "Problem Solving"]
     }
-    
+
   ].sort((a, b) => {
-      const parseDate = (dateStr) => {
-        if (dateStr.includes("Present")) return new Date(3000, 0);
-        
-        const parts = dateStr.split(' ');
-        if (parts.length === 2 && isNaN(parseInt(parts[0]))) {
-          return new Date(parseInt(parts[1]), monthIndex(parts[0]));
-        } else if (parts.length === 3) {
-          return new Date(parseInt(parts[2]), monthIndex(parts[1]), parseInt(parts[0]));
-        }
-        return new Date(0);
-      };
-      
-      const dateA = parseDate(a.date);
-      const dateB = parseDate(b.date);
-      return dateB - dateA;
+    const parseDate = (dateStr) => {
+      if (dateStr.includes("Present")) return new Date(3000, 0);
+
+      const parts = dateStr.split(' ');
+      if (parts.length === 2 && isNaN(parseInt(parts[0]))) {
+        return new Date(parseInt(parts[1]), monthIndex(parts[0]));
+      } else if (parts.length === 3) {
+        return new Date(parseInt(parts[2]), monthIndex(parts[1]), parseInt(parts[0]));
+      }
+      return new Date(0);
+    };
+
+    const dateA = parseDate(a.date);
+    const dateB = parseDate(b.date);
+    return dateB - dateA;
   });
 
   function monthIndex(month) {
     const months = {
-      "jan": 0, "feb": 1, "mar": 2, "apr": 3, "may": 4, "jun": 5, 
+      "jan": 0, "feb": 1, "mar": 2, "apr": 3, "may": 4, "jun": 5,
       "jul": 6, "aug": 7, "sep": 8, "oct": 9, "nov": 10, "dec": 11,
       "january": 0, "february": 1, "march": 2, "april": 3, "june": 5,
       "july": 6, "august": 7, "september": 8, "october": 9, "november": 10, "december": 11
@@ -67,26 +75,26 @@ const ExperiencesSection = () => {
 
   const TimelineItem = ({ item, index }) => {
     const itemRef = useRef(null);
-    const isInView = useInView(itemRef, { 
+    const isInView = useInView(itemRef, {
       once: false,
       margin: "-10% 0px -10% 0px",
       amount: 0.3
     });
-    
+
     const cardVariants = {
-      hidden: { 
-        opacity: 0, 
+      hidden: {
+        opacity: 0,
         x: index % 2 === 0 ? -60 : 60,
         y: 20
       },
-      visible: { 
-        opacity: 1, 
-        x: 0, 
+      visible: {
+        opacity: 1,
+        x: 0,
         y: 0,
-        transition: { 
-          type: "spring", 
-          stiffness: 100, 
-          damping: 12, 
+        transition: {
+          type: "spring",
+          stiffness: 100,
+          damping: 12,
           mass: 0.9,
           delay: 0.1
         }
@@ -94,27 +102,27 @@ const ExperiencesSection = () => {
     };
 
     const dotVariants = {
-      hidden: { 
+      hidden: {
         scale: 0,
         opacity: 0
       },
-      visible: { 
-        scale: 1, 
+      visible: {
+        scale: 1,
         opacity: 1,
-        transition: { 
-          type: "spring", 
-          stiffness: 300, 
-          damping: 15, 
+        transition: {
+          type: "spring",
+          stiffness: 300,
+          damping: 15,
           delay: 0.3
         }
       }
     };
-    
+
     const contentVariants = {
       hidden: { opacity: 0 },
-      visible: { 
+      visible: {
         opacity: 1,
-        transition: { 
+        transition: {
           staggerChildren: 0.1,
           delayChildren: 0.4,
         }
@@ -123,49 +131,49 @@ const ExperiencesSection = () => {
 
     const itemVariants = {
       hidden: { opacity: 0, y: 10 },
-      visible: { 
-        opacity: 1, 
+      visible: {
+        opacity: 1,
         y: 0,
-        transition: { 
+        transition: {
           type: "spring",
           stiffness: 100,
           damping: 10
         }
       }
     };
-    
+
     return (
-      <div 
+      <div
         ref={itemRef}
         className={`relative md:flex ${index % 2 === 0 ? 'md:flex-row-reverse' : ''} md:items-start mb-16 md:mb-20`}
       >
         <div className="hidden md:block absolute left-1/2 top-4 transform -translate-x-1/2">
-           <motion.div 
-             variants={dotVariants}
-             initial="hidden"
-             animate={isInView ? "visible" : "hidden"}
-             className="w-5 h-5 rounded-full bg-gradient-to-br from-emerald-600 to-teal-600 border-2 border-gray-900 shadow-lg flex items-center justify-center"
-           >
-             <i className="fas fa-briefcase text-[8px] text-white/80"></i>
-           </motion.div>
+          <motion.div
+            variants={dotVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            className="w-5 h-5 rounded-full bg-gradient-to-br from-emerald-600 to-teal-600 border-2 border-gray-900 shadow-lg flex items-center justify-center"
+          >
+            <i className="fas fa-briefcase text-[8px] text-white/80"></i>
+          </motion.div>
         </div>
         <div className="md:hidden flex justify-center mb-3">
-           <motion.div 
-             variants={dotVariants}
-             initial="hidden"
-             animate={isInView ? "visible" : "hidden"}
-             className="w-4 h-4 rounded-full bg-gradient-to-br from-emerald-600 to-teal-600 border-2 border-gray-900 shadow-lg flex items-center justify-center"
-           >
-             <i className="fas fa-briefcase text-[6px] text-white/80"></i>
-           </motion.div>
+          <motion.div
+            variants={dotVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            className="w-4 h-4 rounded-full bg-gradient-to-br from-emerald-600 to-teal-600 border-2 border-gray-900 shadow-lg flex items-center justify-center"
+          >
+            <i className="fas fa-briefcase text-[6px] text-white/80"></i>
+          </motion.div>
         </div>
 
         <motion.div
           variants={cardVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          whileHover={{ 
-            scale: 1.03, 
+          whileHover={{
+            scale: 1.03,
             boxShadow: "0 10px 25px -5px rgba(52, 211, 153, 0.2)",
             transition: { type: "spring", stiffness: 400, damping: 10 }
           }}
@@ -200,7 +208,7 @@ const ExperiencesSection = () => {
                       key={idx}
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-                      transition={{ 
+                      transition={{
                         delay: 0.5 + (idx * 0.05),
                         type: "spring",
                         stiffness: 200,
@@ -223,7 +231,7 @@ const ExperiencesSection = () => {
 
   const sectionVariants = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
       opacity: 1,
       transition: {
         when: "beforeChildren",
@@ -235,12 +243,12 @@ const ExperiencesSection = () => {
 
   const headerVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { 
+      transition: {
         type: "spring",
-        stiffness: 100, 
+        stiffness: 100,
         damping: 12
       }
     }
@@ -248,86 +256,86 @@ const ExperiencesSection = () => {
 
   return (
     <div id="experiences" className="relative py-20 md:py-28 pt-0 overflow-hidden">
-    <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-black to-gray-900"></div>
-    <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:32px_32px]"></div>
-    
-    <motion.div
-      className="relative z-10 w-full h-full"
-      initial="hidden"
-      whileInView="visible"
-      variants={sectionVariants}
-      viewport={{ once: false, margin: "-100px 0px" }}
-      ref={sectionRef}
-    >
-      <div className="container relative z-10 mx-auto px-4">
-        <motion.div
-          variants={headerVariants}
-          className="text-center mb-16 md:mb-24"
-        >
-          <motion.h2 
-            className="text-sm uppercase tracking-widest text-emerald-500 mb-2 font-semibold"
-            initial={{ opacity: 0, y: -10 }}
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-black to-gray-900"></div>
+      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:32px_32px]"></div>
+
+      <motion.div
+        className="relative z-10 w-full h-full"
+        initial="hidden"
+        whileInView="visible"
+        variants={sectionVariants}
+        viewport={{ once: false, margin: "-100px 0px" }}
+        ref={sectionRef}
+      >
+        <div className="container relative z-10 mx-auto px-4">
+          <motion.div
+            variants={headerVariants}
+            className="text-center mb-16 md:mb-24"
+          >
+            <motion.h2
+              className="text-sm uppercase tracking-widest text-emerald-500 mb-2 font-semibold"
+              initial={{ opacity: 0, y: -10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              Organizations & Teams
+            </motion.h2>
+            <motion.h3
+              className="text-4xl sm:text-5xl font-bold mb-5 text-gray-100"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: 0.6,
+                delay: 0.1,
+                type: "spring",
+                stiffness: 100
+              }}
+            >
+              Experiences
+            </motion.h3>
+            <motion.div
+              className="w-24 h-1 bg-gradient-to-r from-emerald-600 to-teal-600 mx-auto"
+              initial={{ width: 0, opacity: 0 }}
+              whileInView={{ width: 96, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            ></motion.div>
+          </motion.div>
+
+          <div className="relative max-w-3xl mx-auto">
+            <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-800/30 via-teal-700/50 to-emerald-800/30 transform -translate-x-1/2 rounded-full"></div>
+
+            <motion.div
+              className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-600/50 via-teal-500/70 to-emerald-600/50 transform -translate-x-1/2 rounded-full"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: lineVisible ? 1 : 0 }}
+              transition={{ duration: 1.2, ease: "easeInOut" }}
+            ></motion.div>
+
+            {experienceItems.map((item, index) => (
+              <TimelineItem key={item.id} item={item} index={index} />
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            Organizations & Teams
-          </motion.h2>
-          <motion.h3 
-            className="text-4xl sm:text-5xl font-bold mb-5 text-gray-100"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ 
-              duration: 0.6, 
-              delay: 0.1,
+            transition={{
+              duration: 0.8,
+              delay: 0.5,
               type: "spring",
-              stiffness: 100
+              stiffness: 100,
+              damping: 12
             }}
+            viewport={{ once: false }}
+            className="mt-16 md:mt-24 text-center"
           >
-            Experiences
-          </motion.h3>
-          <motion.div 
-            className="w-24 h-1 bg-gradient-to-r from-emerald-600 to-teal-600 mx-auto"
-            initial={{ width: 0, opacity: 0 }}
-            whileInView={{ width: 96, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          ></motion.div>
-        </motion.div>
-
-        <div className="relative max-w-3xl mx-auto">
-          <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-800/30 via-teal-700/50 to-emerald-800/30 transform -translate-x-1/2 rounded-full"></div>
-          
-          <motion.div 
-            className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-600/50 via-teal-500/70 to-emerald-600/50 transform -translate-x-1/2 rounded-full"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: lineVisible ? 1 : 0 }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
-          ></motion.div>
-
-          {experienceItems.map((item, index) => (
-            <TimelineItem key={item.id} item={item} index={index} />
-          ))}
+            <p className="text-gray-400 max-w-2xl mx-auto text-base">
+              I collaborate with communities and organizations to develop both technical and interpersonal skills,
+              contributing to meaningful initiatives and networking with industry professionals.
+            </p>
+          </motion.div>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ 
-            duration: 0.8, 
-            delay: 0.5,
-            type: "spring",
-            stiffness: 100,
-            damping: 12
-          }} 
-          viewport={{ once: false }}
-          className="mt-16 md:mt-24 text-center"
-        >
-          <p className="text-gray-400 max-w-2xl mx-auto text-base">
-            I collaborate with communities and organizations to develop both technical and interpersonal skills,
-            contributing to meaningful initiatives and networking with industry professionals.
-          </p>
-        </motion.div>
-      </div>
-    </motion.div>
+      </motion.div>
     </div>
   );
 };
