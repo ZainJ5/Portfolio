@@ -128,6 +128,18 @@ function Model({ setModelLoaded, lowPerformanceMode }) {
   );
 }
 
+// Custom environment component to avoid loading external HDR files
+function CustomEnvironment() {
+  return (
+    <>
+      <directionalLight position={[10, 10, 5]} intensity={1.5} castShadow />
+      <directionalLight position={[-10, 10, -5]} intensity={1} />
+      <directionalLight position={[0, -10, 0]} intensity={0.5} />
+      <hemisphereLight intensity={0.5} groundColor="black" />
+    </>
+  );
+}
+
 const HeroSection = () => {
   const [modelLoaded, setModelLoaded] = useState(false);
   const [isPortrait, setIsPortrait] = useState(false);
@@ -368,11 +380,8 @@ const HeroSection = () => {
                           setModelLoaded={setModelLoaded} 
                           lowPerformanceMode={lowPerformanceMode} 
                         />
-                        <Environment 
-                          preset="city" 
-                          background={false}
-                          resolution={lowPerformanceMode ? 256 : 512} 
-                        />
+                        {/* Replace Environment with CustomEnvironment */}
+                        <CustomEnvironment />
                       </Suspense>
                     </PresentationControls>
                     <ambientLight intensity={0.6} />

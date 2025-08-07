@@ -8,16 +8,28 @@ const SkillsSection = () => {
   
   const [enable3DOnMobile, setEnable3DOnMobile] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  
-  const currentDateTime = "2025-04-13 10:57:24";
-  const currentUser = "ZainJ5";
+  const [lowPerformanceMode, setLowPerformanceMode] = useState(false);
   
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
     
+    const checkPerformance = () => {
+      const isLowEndDevice = () => {
+        const userAgent = navigator.userAgent;
+        const isMobile = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+        
+        const cpuCores = navigator.hardwareConcurrency || 0;
+        
+        return (isMobile && cpuCores <= 2) || cpuCores <= 1;
+      };
+      
+      setLowPerformanceMode(isLowEndDevice());
+    };
+    
     checkMobile();
+    checkPerformance();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
@@ -99,7 +111,6 @@ const SkillsSection = () => {
     { name: "Docker", category: "devops" }
   ];
   
-  
   const categories = {
     frontend: { color: "blue-500", text: "text-blue-400" },
     backend: { color: "green-500", text: "text-green-400" },
@@ -134,6 +145,7 @@ const SkillsSection = () => {
   };
 
   const shouldRender3D = !isMobile || enable3DOnMobile;
+  
   return (
     <section id="skills" className="py-20 bg-gradient-to-b from-gray-900 via-black to-gray-900 relative">
       {isMobile && (
@@ -155,22 +167,6 @@ const SkillsSection = () => {
       )}
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-        {/* User info banner */}
-        {/* <div className="flex flex-wrap justify-between items-center mb-10 text-sm text-gray-300 bg-gray-800/50 py-2 px-4 rounded-md">
-          <div className="flex items-center space-x-1">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            <span>{currentDateTime}</span>
-          </div>
-          <div className="flex items-center space-x-1">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-            <span>{currentUser}</span>
-          </div>
-        </div> */}
-
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -227,7 +223,10 @@ const SkillsSection = () => {
                     }`}
                   />
                 ) : (
-                  <BallCanvas icon={technology.icon} />
+                  <BallCanvas 
+                    icon={technology.icon} 
+                    lowPerformance={lowPerformanceMode}
+                  />
                 )}
               </div>
               
@@ -235,7 +234,7 @@ const SkillsSection = () => {
                 {technology.name}
               </p>
               
-              <span className={`mt-1 text-xs ${categories[technology.category].text} opacity-70 group-hover:opacity-100 transition-opacity`}>
+              <span className={`mt-1 text-xs ${categories[technology.category]?.text || 'text-gray-400'} opacity-70 group-hover:opacity-100 transition-opacity`}>
                 {technology.category.charAt(0).toUpperCase() + technology.category.slice(1)}
               </span>
             </motion.div>
@@ -270,43 +269,6 @@ const SkillsSection = () => {
               </motion.span>
             ))}
           </div>
-        </motion.div>
-        
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          viewport={{ once: false }}
-          className="mt-20 max-w-3xl mx-auto"
-        >
-          {/* <h3 className="text-xl font-semibold text-gray-100 mb-8 text-center">Proficiency Levels</h3>
-          
-          <div className="space-y-6">
-            {[
-              { name: "Frontend Development", level: 90, color: "bg-blue-500" },
-              { name: "React Ecosystem", level: 85, color: "bg-cyan-500" },
-              { name: "Backend Development", level: 65, color: "bg-green-500" },
-              { name: "UI/UX Design", level: 85, color: "bg-purple-500" },
-              { name: "DevOps & Deployment", level: 65, color: "bg-red-500" },
-            ].map((skill, index) => (
-              <div key={index} className="relative">
-                <div className="flex justify-between mb-2">
-                  <span className="text-white font-medium">{skill.name}</span>
-                  <span className="text-gray-300">{skill.level}%</span>
-                </div>
-                
-                <div className="h-3 w-full bg-gray-700 rounded-full overflow-hidden">
-                  <motion.div
-                    className={`h-full ${skill.color} rounded-full`}
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${skill.level}%` }}
-                    transition={{ duration: 1, delay: index * 0.1 }}
-                    viewport={{ once: false }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div> */}
         </motion.div>
       </div>
     </section>
