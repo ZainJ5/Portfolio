@@ -8,6 +8,16 @@ const ProjectsSection = () => {
   
   const projects = [
     {
+      id: 7,
+      title: "News Aggregator — CI/CD Pipeline",
+      description:
+        "A full-stack news platform (React, Express & PostgreSQL) shipped through a complete GitHub Actions CI/CD pipeline that lints, tests, builds Docker images, pushes them to AWS ECR, and deploys to EC2 across dedicated testing and staging environments with email notifications.",
+      image: "/project/devops-news-aggregator.png",
+      tags: ["Docker", "GitHub Actions", "AWS (ECR/EC2)", "React", "Node.js", "PostgreSQL"],
+      link: "#",
+      github: "https://github.com/ZainJ5/news-aggregator-docker-cicd",
+    },
+    {
       id: 1,
       title: "Real Time Chatting Application",
       description:
@@ -72,6 +82,36 @@ const ProjectsSection = () => {
       video: "/project/youtube.mp4", 
       link: "#",
       github: "https://github.com/ZainJ5/Video-Streaming-app-Youtube-clone-",
+    },
+    {
+      id: 8,
+      title: "Linux System Administration",
+      description:
+        "Hands-on Ubuntu Server administration covering user & group management, sudo policies, SSH key provisioning, fine-grained ACL permissions, package management, and process & resource monitoring — fully documented with commands, outputs, and explanations.",
+      image: "/project/devops-linux-admin.png",
+      tags: ["Linux", "Ubuntu", "Bash", "SSH", "ACL"],
+      link: "#",
+      github: "https://github.com/ZainJ5/devops-linux-administration",
+    },
+    {
+      id: 9,
+      title: "Bash Automation Scripts",
+      description:
+        "A suite of Bash scripts that automate Linux administration: system-info reporting, user/group provisioning, SSH hardening, timestamped backups, an HTML system-health report, and an idempotent LAMP/LEMP stack installer with CLI flags and logging.",
+      image: "/project/devops-bash-scripting.png",
+      tags: ["Bash", "Linux", "LAMP/LEMP", "Automation"],
+      link: "#",
+      github: "https://github.com/ZainJ5/devops-bash-scripting",
+    },
+    {
+      id: 10,
+      title: "Docker Deployment — DOMjudge",
+      description:
+        "Containerized deployment of the DOMjudge contest system (MariaDB, DOMserver & Judgehosts) built two ways — an imperative Bash + Docker CLI script and a declarative Docker Compose stack — as a side-by-side comparison with persistent named volumes.",
+      image: "/project/devops-docker-deployment.png",
+      tags: ["Docker", "Docker Compose", "MariaDB", "DevOps"],
+      link: "#",
+      github: "https://github.com/ZainJ5/devops-docker-deployment",
     },
   ];
   
