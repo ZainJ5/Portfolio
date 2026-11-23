@@ -26,7 +26,7 @@ function Card({ p, i, total, progress }) {
     >
       <motion.article
         style={{ scale }}
-        className="origin-top grid overflow-hidden rounded-2xl border border-line-strong bg-ink-2 lg:h-[41rem] lg:grid-cols-2"
+        className="origin-top grid grid-cols-1 overflow-hidden rounded-2xl border border-line-strong bg-ink-2 lg:h-[41rem] lg:grid-cols-2"
       >
         <div className="flex flex-col p-6 sm:p-9 lg:p-11">
           <div className="flex items-center justify-between">
@@ -78,11 +78,13 @@ function Card({ p, i, total, progress }) {
         </div>
 
         <div className="relative border-t hairline bg-ink-3 lg:border-l lg:border-t-0">
-          <div className="absolute right-6 top-6 z-10 text-right">
-            <p className="text-3xl font-medium tracking-tight">{p.metric.value}</p>
-            <p className="label mt-1 text-mute">{p.metric.label}</p>
-          </div>
-          <Tilt className="h-[22rem] px-6 pb-6 pt-24 sm:h-[26rem] sm:px-10 sm:pb-10 lg:h-full">
+          {p.metric && (
+            <div className="absolute right-6 top-6 z-10 text-right">
+              <p className="text-3xl font-medium tracking-tight">{p.metric.value}</p>
+              <p className="label mt-1 text-mute">{p.metric.label}</p>
+            </div>
+          )}
+          <Tilt className={`h-[20rem] px-5 pb-5 sm:h-[26rem] sm:px-10 sm:pb-10 lg:h-full ${p.metric ? "pt-24" : "pt-5 sm:pt-10"}`}>
             <Visual p={p} />
           </Tilt>
         </div>

@@ -62,14 +62,14 @@ export default function Skills() {
 
         <dl className="mt-16 md:mt-24">
           {skillGroups.map((g, i) => (
-            <Reveal key={g.title} delay={i * 0.04} y={16} className="grid gap-3 border-t hairline py-6 md:grid-cols-12 md:gap-6">
+            <Reveal key={g.title} delay={i * 0.04} y={16} className="grid grid-cols-1 gap-3 border-t hairline py-6 md:grid-cols-12 md:gap-6">
               <dt className="label pt-1.5 text-mute md:col-span-3">
                 <span className="mr-3 text-signal">{String(i + 1).padStart(2, "0")}</span>
                 {g.title}
               </dt>
-              <dd className="md:col-span-9 text-[clamp(1.25rem,2.2vw,1.875rem)] font-medium leading-snug tracking-tight">
+              <dd className="flex min-w-0 flex-wrap gap-y-1 md:col-span-9 text-[clamp(1.25rem,2.2vw,1.875rem)] font-medium leading-snug tracking-tight">
                 {g.items.map((it, j) => (
-                  <span key={it}>
+                  <span key={it} className="flex">
                     {it}
                     {j < g.items.length - 1 && <span className="mx-2.5 text-mute/60">/</span>}
                   </span>

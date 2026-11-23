@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { profile, stats } from "@/lib/data";
+import { profile } from "@/lib/data";
 import { Arrow, EASE, Magnetic } from "./ui";
 
 const HeroScene = dynamic(() => import("./three/HeroScene"), { ssr: false });
@@ -97,24 +97,7 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      <motion.dl
-        className="wrap grid grid-cols-2 border-t hairline md:grid-cols-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 1.2 }}
-      >
-        {stats.map((s, i) => (
-          <div
-            key={s.label}
-            className={`flex flex-col gap-2 py-5 md:py-6 pr-4 ${i % 2 ? "pl-4 border-l hairline" : ""} ${
-              i > 0 ? "md:pl-6 md:border-l" : ""
-            } ${i > 1 ? "border-t md:border-t-0 hairline" : ""}`}
-          >
-            <dt className="order-2 text-[13px] leading-snug text-mute max-w-[22ch]">{s.label}</dt>
-            <dd className="order-1 text-2xl md:text-3xl font-medium tracking-tight tabular-nums">{s.value}</dd>
-          </div>
-        ))}
-      </motion.dl>
+
     </section>
   );
 }

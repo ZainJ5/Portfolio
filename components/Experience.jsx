@@ -54,9 +54,7 @@ export default function Experience() {
               <p className="mt-4 text-[15px] leading-relaxed text-bone-dim">{c.body}</p>
             </Reveal>
           ))}
-          <li className="hidden bg-ink p-7 lg:flex lg:items-end" aria-hidden="true">
-            <span className="display text-6xl text-ink-3">2024—26</span>
-          </li>
+          <li className="hidden bg-ink sm:block" aria-hidden="true" />
         </ul>
       </div>
     </section>

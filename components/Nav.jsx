@@ -64,7 +64,7 @@ export default function Nav() {
             <span className="text-sm font-medium tracking-tight">{profile.name}</span>
           </a>
 
-          <nav className="hidden md:flex items-center gap-8" aria-label="Primary">
+          <nav className="hidden lg:flex items-center gap-8" aria-label="Primary">
             {nav.map((n) => (
               <a key={n.href} href={n.href} className="link-draw text-sm text-bone-dim hover:text-bone transition-colors">
                 {n.label}
@@ -73,20 +73,20 @@ export default function Nav() {
           </nav>
 
           <div className="flex items-center gap-5">
-            <span className="hidden lg:block">
+            <span className="hidden xl:block">
               <Clock />
             </span>
             <a
               href={profile.resume}
               target="_blank"
               rel="noreferrer"
-              className="hidden md:inline-flex label rounded-full border border-line-strong px-4 py-2 text-bone transition-colors hover:bg-bone hover:text-ink"
+              className="hidden lg:inline-flex label rounded-full border border-line-strong px-4 py-2 text-bone transition-colors hover:bg-bone hover:text-ink"
             >
               Résumé
             </a>
             <button
               type="button"
-              className="md:hidden label flex h-11 items-center gap-2 text-bone"
+              className="lg:hidden label flex h-11 items-center gap-2 text-bone"
               aria-expanded={open}
               aria-controls="mobile-menu"
               onClick={() => setOpen((v) => !v)}
@@ -105,7 +105,7 @@ export default function Nav() {
         {open && (
           <motion.div
             id="mobile-menu"
-            className="fixed inset-0 z-40 bg-ink md:hidden"
+            className="fixed inset-0 z-40 bg-ink lg:hidden"
             initial={{ clipPath: "inset(0 0 100% 0)" }}
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}
