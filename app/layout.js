@@ -1,23 +1,44 @@
-import './globals.css';
-import { Inter } from 'next/font/google';
-import Head from 'next/head';
+import "./globals.css";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 
-const inter = Inter({ subsets: ['latin'] });
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+  display: "swap",
+});
+const instrument = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-instrument",
+  display: "swap",
+});
+
+const title = "Zain Jamshaid — Software Engineer";
+const description =
+  "Associate Software Engineer at Ubiquify Digital. Full-stack products, CI/CD pipelines and LLM systems, built and shipped end to end.";
 
 export const metadata = {
-  title: 'Zain Jamshaid - Software Engineer & Web Developer',
-  description: 'Portfolio showcasing the projects and skills of Zain Jamshaid, a Software Engineering student and Web Developer specializing in Next.js and interactive web experiences.',
+  metadataBase: new URL("https://zainjamshaid.vercel.app"),
+  title,
+  description,
+  authors: [{ name: "Zain Jamshaid" }],
+  openGraph: { title, description, type: "website", locale: "en_US" },
+  twitter: { card: "summary_large_image", title, description },
+};
+
+export const viewport = {
+  themeColor: "#0c0b0a",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <Head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-      </Head>
-      <body className={inter.className}>
-        {children}
-      </body>
+    <html
+      lang="en"
+      className={`${geist.variable} ${geistMono.variable} ${instrument.variable}`}
+    >
+      <body className="bg-ink text-bone">{children}</body>
     </html>
   );
 }

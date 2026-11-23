@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# zainjamshaid — portfolio
 
-## Getting Started
+Personal site of Zain Jamshaid. Next.js 15 (App Router), React 19, Tailwind CSS 4,
+React Three Fiber, Motion and Lenis.
 
-First, run the development server:
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The contact form posts to `app/api/send-email/route.js` and needs three variables in `.env`:
+`RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `RESEND_TO_EMAIL`.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Where things live
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Path | What |
+| --- | --- |
+| `lib/data.js` | Every fact on the site: roles, dates, projects, skills, links. Edit content here only. |
+| `app/globals.css` | Design tokens (colour, type, easing) and the few global utilities. |
+| `components/three/HeroScene.jsx` | Hero point-cloud orb: custom GLSL shader, cursor and scroll reactive. |
+| `components/three/SkillsScene.jsx` | The 3D skill spheres, all in one WebGL canvas. |
+| `components/visuals/Visuals.jsx` | Project artwork drawn in code (pipeline, agent graph, chat, browser frame). |
+| `components/*.jsx` | One file per page section. |
 
-## Learn More
+Keep `lib/data.js`, the résumé PDF in `public/resume/` and LinkedIn in step with each other.
 
-To learn more about Next.js, take a look at the following resources:
+## Credits
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Written for this site, drawing on well-known open-source patterns:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Decal-on-icosahedron skill spheres: after [adrianhajdin/project_3D_developer_portfolio](https://github.com/adrianhajdin/project_3D_developer_portfolio), rebuilt here as a single canvas.
+- 3D simplex noise in the hero shader: Ian McEwan / Ashima Arts, [webgl-noise](https://github.com/stegu/webgl-noise) (MIT).
+- Skill logos: [Devicon](https://github.com/devicons/devicon) (MIT).
+- Smooth scrolling: [Lenis](https://github.com/darkroomengineering/lenis) (MIT).
+- 3D: [react-three-fiber](https://github.com/pmndrs/react-three-fiber) and [drei](https://github.com/pmndrs/drei) (MIT).
+- Interaction patterns (magnetic buttons, masked line reveals, scroll-lit text, stacking cards, cursor-follow previews) are in the spirit of [Magic UI](https://github.com/magicuidesign/magicui) and [React Bits](https://github.com/DavidHDev/react-bits); the implementations here are original.

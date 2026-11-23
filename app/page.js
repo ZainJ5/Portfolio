@@ -1,40 +1,36 @@
-"use client";
-
-import React, { useEffect, useState } from 'react';
-import Lenis from '@studio-freight/lenis';
-import dynamic from 'next/dynamic';
-
-import Navbar from './components/NavBar.jsx';
-import HeroSection from './components/HeroSection.jsx';
-import AboutSection from './components/AboutSection.jsx';
-import EducationSection from './components/EducationSection.jsx';
-import SkillsSection from './components/SkillsSection.jsx';
-import ProjectsSection from './components/ProjectsSection.jsx';
-import AchievementsSection from './components/AchievementsSection.jsx';
-import CertificatesSection from './components/CertificatesSection.jsx';
-import ExperiencesSection from './components/ExperiencesSection.jsx';
-import ContactSection from './components/ContactSection.jsx';
-import Footer from './components/Footer.jsx';
-import ScrollToTop from './components/ScrollToTop.jsx';
-
-const Cursor = dynamic(() => import('./components/Cursor.jsx'), { ssr: false });
+import SmoothScroll from "@/components/SmoothScroll";
+import Nav from "@/components/Nav";
+import Hero from "@/components/Hero";
+import About, { Marquee } from "@/components/About";
+import Work from "@/components/Work";
+import Experience from "@/components/Experience";
+import Skills from "@/components/Skills";
+import Recognition from "@/components/Recognition";
+import Contact, { Footer } from "@/components/Contact";
 
 export default function Home() {
   return (
-    <main className="bg-black text-white min-h-screen">
-      <Cursor />
-      <Navbar />
-      <HeroSection />
-      <AboutSection />
-      <EducationSection />
-      <SkillsSection />
-      <ProjectsSection />
-      <AchievementsSection />
-      <ExperiencesSection />
-      <CertificatesSection/>
-      <ContactSection />
+    <>
+      <SmoothScroll />
+      <a
+        href="#work"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-bone focus:px-4 focus:py-2 focus:text-ink"
+      >
+        Skip to work
+      </a>
+      <Nav />
+      <main>
+        <Hero />
+        <Marquee />
+        <Work />
+        <About />
+        <Experience />
+        <Skills />
+        <Recognition />
+        <Contact />
+      </main>
       <Footer />
-      <ScrollToTop />
-    </main>
+      <div className="grain" aria-hidden="true" />
+    </>
   );
 }
